@@ -17,3 +17,20 @@ describe("service", () => {
     assert.match(out, /RUN/);
   });
 });
+
+// ── detail, added after the first release ───────────────────────────────────
+import { normalizeDetail } from "../lib/service.js";
+
+describe("normalizeDetail", () => {
+  it("carries the dependency lists", () => {
+    const v = normalizeDetail({ detail: { name: "Spooler", dependsOn: ["RPCSS"], dependedOnBy: ["Fax"] } });
+    assert.deepEqual(v.detail.dependsOn, ["RPCSS"]);
+    assert.deepEqual(v.detail.dependedOnBy, ["Fax"]);
+  });
+  it("defaults missing fields rather than emitting undefined", () => {
+    const d = normalizeDetail({ detail: {} }).detail;
+    assert.equal(d.name, "");
+    assert.equal(d.processId, 0);
+    assert.deepEqual(d.dependsOn, []);
+  });
+});
