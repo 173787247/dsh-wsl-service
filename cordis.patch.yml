@@ -1,0 +1,5 @@
+- insert:
+    - id: dsh-wsl-service
+      name: dsh-wsl-service
+      config:
+        timeoutMs: 30000
